@@ -1,0 +1,37 @@
+{
+  "name": "tryfirst",
+  "version": "0.1.0",
+  "description": "Try any agent skill, plugin, MCP server or npm package in a sandbox before it touches your machine",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "agent-skills",
+    "mcp",
+    "claude-code",
+    "codex",
+    "sandbox",
+    "security"
+  ],
+  "author": "Aryan Adhikari",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "tryfirst": "src/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "zod": "^4.6.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aryan01101/tryfirst.git"
+  },
+  "homepage": "https://github.com/Aryan01101/tryfirst#readme"
+}
