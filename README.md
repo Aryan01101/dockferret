@@ -24,6 +24,7 @@ Verdict: review first
 dockferret check <target> [--json]                         static report, with file:line evidence
 dockferret run <target> [--net] [--timeout s] -- <command>  run it against a sandboxed copy
 dockferret mcp                                             MCP connector for any agent
+dockferret setup [--yes] [--uninstall]                      connect every agent on this machine
 ```
 
 `<target>` is a local folder, a GitHub URL (`https://github.com/owner/repo/tree/main/sub/dir` works), or an npm package name. npm packages are downloaded with install scripts disabled, so checking never runs the thing being checked.
@@ -72,6 +73,10 @@ It recognises Agent Skills (`SKILL.md`, read by 27+ agents), Claude Code plugins
 
 - `check` reads source. It sees what code and instructions *mention*, so a tool that watches for `caffeinate` looks the same as one that runs it. Confirm with `run`.
 - The sandbox runs on macOS only for now. Linux (bubblewrap) and Docker are next.
+- The automatic checks recognise common install commands (listed above). An install written some other way is not caught, which is why `setup` also adds the instruction line.
+- Hooks see installs your agent runs, not plugins you install yourself through an agent's own menus.
+- The Claude Code and Codex integrations are tested inside those agents. Cursor and Gemini CLI are tested against their documented hook formats; report anything that behaves differently.
+- The automatic checks run anywhere Node 20+ runs; only `run` needs macOS today.
 - It is a second opinion, not a guarantee. Read the evidence lines.
 
 ## License
