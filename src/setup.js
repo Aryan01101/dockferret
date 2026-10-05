@@ -34,6 +34,7 @@ export function withHook(settings, event, entry) {
   hooks[event] = (hooks[event] ?? []).filter(g => !JSON.stringify(g).includes(MARK))
   if (entry) hooks[event].push(entry)
   if (!hooks[event].length) delete hooks[event]
+  if (!Object.keys(hooks).length) { const { hooks: _, ...rest } = settings; return rest }
   return { ...settings, hooks }
 }
 

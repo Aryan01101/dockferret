@@ -80,4 +80,5 @@ test('withHook removes only DockFerret entries', () => {
   const other = { matcher: 'Edit', hooks: [] }
   const ours = { matcher: 'Bash', hooks: [{ command: 'node /h/.dockferret/runtime/hook.js claude' }] }
   assert.deepEqual(withHook({ hooks: { PreToolUse: [other, ours] } }, 'PreToolUse', null).hooks.PreToolUse, [other])
+  assert.deepEqual(withHook({ model: 'x', hooks: { PreToolUse: [ours] } }, 'PreToolUse', null), { model: 'x' })
 })
