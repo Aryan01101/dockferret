@@ -1,13 +1,13 @@
-# tryfirst
+# dockferret
 
 Try any agent skill, plugin, MCP server or npm package in a sandbox before it touches your machine.
 
-Thousands of skills, plugins and MCP servers are appearing for Claude Code, Codex, Cursor, Gemini CLI and every other coding agent. Most of them are fine. Some run code on install, keep running after you close everything, read your keys, or quietly spend your tokens. `tryfirst` tells you which before you install.
+Thousands of skills, plugins and MCP servers are appearing for Claude Code, Codex, Cursor, Gemini CLI and every other coding agent. Most of them are fine. Some run code on install, keep running after you close everything, read your keys, or quietly spend your tokens. `dockferret` tells you which before you install.
 
 ```
-$ npx tryfirst check https://github.com/someone/cool-skill
+$ npx dockferret check https://github.com/someone/cool-skill
 
-tryfirst · cool-skill  (skill · github.com/someone/cool-skill · 14 files)
+dockferret · cool-skill  (skill · github.com/someone/cool-skill · 14 files)
 Verdict: review first
 
 ● high   pipes a download straight into a shell
@@ -21,9 +21,9 @@ Verdict: review first
 ## Commands
 
 ```
-tryfirst check <target> [--json]                         static report, with file:line evidence
-tryfirst run <target> [--net] [--timeout s] -- <command>  run it against a sandboxed copy
-tryfirst mcp                                             MCP connector for any agent
+dockferret check <target> [--json]                         static report, with file:line evidence
+dockferret run <target> [--net] [--timeout s] -- <command>  run it against a sandboxed copy
+dockferret mcp                                             MCP connector for any agent
 ```
 
 `<target>` is a local folder, a GitHub URL (`https://github.com/owner/repo/tree/main/sub/dir` works), or an npm package name. npm packages are downloaded with install scripts disabled, so checking never runs the thing being checked.
@@ -35,15 +35,15 @@ tryfirst mcp                                             MCP connector for any a
 Add the connector, then ask your agent "should I install this?":
 
 ```
-codex mcp add tryfirst -- npx -y tryfirst mcp
-claude mcp add tryfirst -- npx -y tryfirst mcp
+codex mcp add dockferret -- npx -y dockferret mcp
+claude mcp add dockferret -- npx -y dockferret mcp
 ```
 
-For Cursor and other MCP clients, add a server with command `npx` and args `["-y", "tryfirst", "mcp"]`. It exposes two tools, `check` and `run`. Your own agent reads the report and judges fit against what you're working on, so there's no extra model bill.
+For Cursor and other MCP clients, add a server with command `npx` and args `["-y", "dockferret", "mcp"]`. It exposes two tools, `check` and `run`. Your own agent reads the report and judges fit against what you're working on, so there's no extra model bill.
 
 ## What the sandbox does
 
-`tryfirst run` copies the target to a temporary folder and runs your command under macOS `sandbox-exec`:
+`dockferret run` copies the target to a temporary folder and runs your command under macOS `sandbox-exec`:
 
 - **No network**, including DNS, unless you pass `--net`.
 - **No reading your home folder** (keys, browser profiles, other projects). Language runtimes such as `~/.nvm` stay readable.

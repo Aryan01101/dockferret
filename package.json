@@ -1,5 +1,5 @@
 {
-  "name": "tryfirst",
+  "name": "dockferret",
   "version": "0.1.0",
   "description": "Try any agent skill, plugin, MCP server or npm package in a sandbox before it touches your machine",
   "scripts": {
@@ -17,7 +17,7 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "tryfirst": "src/cli.js"
+    "dockferret": "src/cli.js"
   },
   "engines": {
     "node": ">=20"
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Aryan01101/tryfirst.git"
+    "url": "git+https://github.com/Aryan01101/dockferret.git"
   },
-  "homepage": "https://github.com/Aryan01101/tryfirst#readme"
+  "homepage": "https://github.com/Aryan01101/dockferret#readme"
 }

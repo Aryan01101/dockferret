@@ -42,8 +42,8 @@ function cwdOf(pid) {
 }
 
 export async function runSandboxed(srcDir, command, { timeoutMs = 60_000, network = false } = {}) {
-  if (platform() !== 'darwin') throw new Error('The sandbox runs on macOS for now. Use `tryfirst check` on other systems.')
-  const root = realpathSync(mkdtempSync(join(tmpdir(), 'tryfirst-run-')))
+  if (platform() !== 'darwin') throw new Error('The sandbox runs on macOS for now. Use `dockferret check` on other systems.')
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'dockferret-run-')))
   const work = join(root, 'work'), home = join(root, 'home'), tmp = join(root, 'tmp')
   cpSync(srcDir, work, { recursive: true })
   mkdirSync(home); mkdirSync(tmp)
@@ -92,7 +92,7 @@ export async function runSandboxed(srcDir, command, { timeoutMs = 60_000, networ
 }
 
 export function formatRun(r) {
-  const out = [`tryfirst run · ${r.command}`, `Exit: ${r.timedOut ? 'stopped after timeout' : r.exitCode} · ${r.seconds}s · network ${r.network ? 'allowed' : 'blocked'}`, '']
+  const out = [`dockferret run · ${r.command}`, `Exit: ${r.timedOut ? 'stopped after timeout' : r.exitCode} · ${r.seconds}s · network ${r.network ? 'allowed' : 'blocked'}`, '']
   const item = (bad, text) => out.push(`${bad ? '●' : '○'} ${text}`)
   item(r.blockedNetwork.length, r.blockedNetwork.length ? 'tried to reach the network (blocked)' : 'no network attempts seen')
   for (const l of r.blockedNetwork.slice(0, 2)) out.push(`    ${l.trim().slice(0, 140)}`)

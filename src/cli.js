@@ -6,18 +6,18 @@ import { formatRun, runSandboxed } from './sandbox.js'
 import { formatReport, resolveTarget, scanDir } from './scan.js'
 
 const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'))
-const HELP = `tryfirst ${version}: try it in a sandbox before it touches your machine
+const HELP = `dockferret ${version}: try it in a sandbox before it touches your machine
 
-  tryfirst check <target> [--json]           What it can do, with file:line evidence
-  tryfirst run <target> [--net] [--timeout s] -- <command>
+  dockferret check <target> [--json]           What it can do, with file:line evidence
+  dockferret run <target> [--net] [--timeout s] -- <command>
                                              Run a command against a sandboxed copy
-  tryfirst mcp                               Start the MCP connector (stdio)
+  dockferret mcp                               Start the MCP connector (stdio)
 
   <target> is a local folder, a GitHub URL, or an npm package name.
 
   Add to your agent:
-    codex mcp add tryfirst -- npx -y tryfirst mcp
-    claude mcp add tryfirst -- npx -y tryfirst mcp`
+    codex mcp add dockferret -- npx -y dockferret mcp
+    claude mcp add dockferret -- npx -y dockferret mcp`
 
 const dash = process.argv.indexOf('--')
 const argv = process.argv.slice(2, dash === -1 ? undefined : dash)
@@ -49,6 +49,6 @@ try {
     process.exitCode = values.help ? 0 : 1
   }
 } catch (e) {
-  console.error(`tryfirst: ${e.message}`)
+  console.error(`dockferret: ${e.message}`)
   process.exitCode = 1
 }

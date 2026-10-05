@@ -8,7 +8,7 @@ import { runSandboxed } from '../src/sandbox.js'
 import { scanDir } from '../src/scan.js'
 
 function fixture(files) {
-  const dir = mkdtempSync(join(tmpdir(), 'tryfirst-test-'))
+  const dir = mkdtempSync(join(tmpdir(), 'dockferret-test-'))
   for (const [name, body] of Object.entries(files)) {
     mkdirSync(join(dir, name, '..'), { recursive: true })
     writeFileSync(join(dir, name), body)
@@ -57,7 +57,7 @@ test('an npm MCP server with an install script, exec and network is held for rev
 
 test('the sandbox blocks home writes and network, and catches leftovers', { skip: platform() !== 'darwin' }, async () => {
   const dir = fixture({ 'README.md': 'x' })
-  const escape = join(homedir(), `tryfirst-escape-${process.pid}`)
+  const escape = join(homedir(), `dockferret-escape-${process.pid}`)
   const r = await runSandboxed(dir, [
     'echo made > ./out.txt',
     'echo leak > ~/inside-fake-home.txt',

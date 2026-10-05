@@ -104,7 +104,7 @@ export function scanDir(dir) {
 // Turns "./dir", a GitHub URL or an npm package name into a local folder.
 export function resolveTarget(target) {
   if (existsSync(target)) return { dir: target, source: 'local folder', cleanup() {} }
-  const tmp = mkdtempSync(join(tmpdir(), 'tryfirst-'))
+  const tmp = mkdtempSync(join(tmpdir(), 'dockferret-'))
   const cleanup = () => rmSync(tmp, { recursive: true, force: true })
   try {
   const gh = target.match(/^(https?:\/\/)?github\.com\/([\w.-]+\/[\w.-]+?)(\.git)?(\/tree\/([^/]+)\/?(.*))?$/)
@@ -128,13 +128,13 @@ export function resolveTarget(target) {
 const DOT = { high: '●', medium: '◐', info: '○' }
 
 export function formatReport(name, source, r) {
-  const out = [`tryfirst · ${name}  (${r.kinds.join(', ')} · ${source} · ${r.files} files)`, `Verdict: ${r.verdict}`, '']
+  const out = [`dockferret · ${name}  (${r.kinds.join(', ')} · ${source} · ${r.files} files)`, `Verdict: ${r.verdict}`, '']
   if (!r.findings.length) out.push('No risky capabilities found in the source.')
   for (const f of r.findings) {
     out.push(`${DOT[f.severity]} ${f.severity.padEnd(6)} ${f.what}`)
     for (const w of f.where.slice(0, 3)) out.push(`           ${w}`)
     if (f.where.length > 3) out.push(`           …and ${f.where.length - 3} more`)
   }
-  out.push('', 'This is a static read of the source. Run it in the sandbox to see what it actually does: tryfirst run <target> -- <command>')
+  out.push('', 'This is a static read of the source. Run it in the sandbox to see what it actually does: dockferret run <target> -- <command>')
   return out.join('\n')
 }

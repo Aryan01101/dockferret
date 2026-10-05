@@ -7,10 +7,10 @@ import { formatRun, runSandboxed } from './sandbox.js'
 import { formatReport, resolveTarget, scanDir } from './scan.js'
 
 const text = t => ({ content: [{ type: 'text', text: t }] })
-const fail = e => ({ content: [{ type: 'text', text: `tryfirst failed: ${e.message}` }], isError: true })
+const fail = e => ({ content: [{ type: 'text', text: `dockferret failed: ${e.message}` }], isError: true })
 
 export async function serve(version) {
-  const server = new McpServer({ name: 'tryfirst', version })
+  const server = new McpServer({ name: 'dockferret', version })
 
   server.registerTool('check', {
     title: 'Check a tool before installing it',
