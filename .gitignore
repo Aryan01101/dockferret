@@ -1,1 +1,8 @@
 node_modules
+# local agent/plugin state, never part of the package
+.claude-flow/
+.swarm/
+*.db
+*.db-shm
+*.db-wal
+.DS_Store
