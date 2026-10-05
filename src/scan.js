@@ -128,7 +128,7 @@ export function resolveTarget(target) {
 const DOT = { high: '●', medium: '◐', info: '○' }
 
 export function formatReport(name, source, r) {
-  const out = [`dockferret · ${name}  (${r.kinds.join(', ')} · ${source} · ${r.files} files)`, `Verdict: ${r.verdict}`, '']
+  const out = [`dockferret · ${name}  (${r.kinds.join(', ')} · ${source} · ${r.files} ${r.files === 1 ? 'file' : 'files'})`, `Verdict: ${r.verdict}`, '']
   if (!r.findings.length) out.push('No risky capabilities found in the source.')
   for (const f of r.findings) {
     out.push(`${DOT[f.severity]} ${f.severity.padEnd(6)} ${f.what}`)

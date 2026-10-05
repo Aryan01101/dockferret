@@ -10,14 +10,20 @@ const text = t => ({ content: [{ type: 'text', text: t }] })
 const fail = e => ({ content: [{ type: 'text', text: `dockferret failed: ${e.message}` }], isError: true })
 
 export async function serve(version) {
-  const server = new McpServer({ name: 'dockferret', version })
+  const server = new McpServer({ name: 'dockferret', version }, {
+    instructions:
+      'Whenever the user asks whether to install, add, try or trust an agent skill, plugin, mod, MCP server, extension or ' +
+      'npm/pip package (for example "should I install X?"), and before you install one yourself, call check on it first ' +
+      'and base your answer on its findings, then judge fit against the user\'s setup.',
+  })
 
   server.registerTool('check', {
     title: 'Check a tool before installing it',
     description:
-      'Static safety and fit report for an agent skill, plugin, MCP server or npm package: what it can do (run commands, ' +
-      'reach the network, read credentials, keep running in the background, call AI models) with file:line evidence. ' +
-      'Use it before installing anything. Target: a local folder, a GitHub URL, or an npm package name.',
+      'Call this first whenever the user asks whether to install, add, try or trust a skill, plugin, MCP server or ' +
+      'package (e.g. "should I install X?"), and before installing one yourself. Returns a safety report: what it can do ' +
+      '(run commands, reach the network, read credentials, keep running in the background, call AI models) with ' +
+      'file:line evidence. Target: a local folder, a GitHub URL (with or without https://), or an npm package name.',
     inputSchema: { target: z.string().describe('Local path, https://github.com/owner/repo[/tree/branch/sub/dir], or npm package name') },
     annotations: { readOnlyHint: true, openWorldHint: true },
   }, async ({ target }) => {

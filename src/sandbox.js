@@ -94,7 +94,8 @@ export async function runSandboxed(srcDir, command, { timeoutMs = 60_000, networ
 export function formatRun(r) {
   const out = [`dockferret run · ${r.command}`, `Exit: ${r.timedOut ? 'stopped after timeout' : r.exitCode} · ${r.seconds}s · network ${r.network ? 'allowed' : 'blocked'}`, '']
   const item = (bad, text) => out.push(`${bad ? '●' : '○'} ${text}`)
-  item(r.blockedNetwork.length, r.blockedNetwork.length ? 'tried to reach the network (blocked)' : 'no network attempts seen')
+  if (r.network) item(false, 'network was allowed (--net), so connections were not blocked or recorded')
+  else item(r.blockedNetwork.length, r.blockedNetwork.length ? 'tried to reach the network (blocked)' : 'no network attempts seen')
   for (const l of r.blockedNetwork.slice(0, 2)) out.push(`    ${l.trim().slice(0, 140)}`)
   item(r.blockedFiles.length, r.blockedFiles.length ? 'tried to read or write outside the sandbox (blocked)' : 'stayed inside its sandbox folder')
   for (const l of r.blockedFiles.slice(0, 2)) out.push(`    ${l.trim().slice(0, 140)}`)

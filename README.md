@@ -39,6 +39,14 @@ codex mcp add dockferret -- npx -y dockferret mcp
 claude mcp add dockferret -- npx -y dockferret mcp
 ```
 
+To make your agent check on its own, add this line to its instructions (`CLAUDE.md` for Claude Code, `AGENTS.md` for Codex and most other agents):
+
+```
+Before installing or recommending any skill, plugin, MCP server or package, check it with dockferret first.
+```
+
+Then a plain "should I install X?" triggers a check. Without the line, agents use it when they judge it relevant, which is not every time.
+
 For Cursor and other MCP clients, add a server with command `npx` and args `["-y", "dockferret", "mcp"]`. It exposes two tools, `check` and `run`. Your own agent reads the report and judges fit against what you're working on, so there's no extra model bill.
 
 ## What the sandbox does

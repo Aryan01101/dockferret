@@ -1,6 +1,6 @@
 {
   "name": "dockferret",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Try any agent skill, plugin, MCP server or npm package in a sandbox before it touches your machine",
   "scripts": {
     "test": "node --test"
