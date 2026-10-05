@@ -32,22 +32,23 @@ dockferret mcp                                             MCP connector for any
 
 ## Use it from your agent
 
-Add the connector, then ask your agent "should I install this?":
-
 ```
-codex mcp add dockferret -- npx -y dockferret mcp
-claude mcp add dockferret -- npx -y dockferret mcp
+npm i -g dockferret
+dockferret setup
 ```
 
-To make your agent check on its own, add this line to its instructions (`CLAUDE.md` for Claude Code, `AGENTS.md` for Codex and most other agents):
+`setup` finds the agents on your machine, shows exactly which files it will change, and asks before touching anything. Every file is backed up first, and `dockferret setup --uninstall` removes only what it added.
 
-```
-Before installing or recommending any skill, plugin, MCP server or package, check it with dockferret first.
-```
+| Agent | What setup adds | When an install looks risky |
+|---|---|---|
+| Claude Code | `PreToolUse` hook, MCP connector, one line in `~/.claude/CLAUDE.md` | You get the approval prompt with the findings |
+| Codex | `PreToolUse` hook (approve it once with `/hooks`), MCP connector, one line in `~/.codex/AGENTS.md` | Blocked with the findings (Codex hooks can't ask yet) |
+| Cursor | `beforeShellExecution` hook, MCP connector | You get the approval prompt with the findings |
+| Gemini CLI | an extension with a `BeforeTool` hook, MCP connector and the instruction line | Blocked with the findings |
 
-Then a plain "should I install X?" triggers a check. Without the line, agents use it when they judge it relevant, which is not every time.
+From then on, when your agent runs an install (`npx skills add`, `npm i`/`pnpm add`/`yarn add`/`bun add`, `claude mcp add … npx pkg`, `codex mcp add … npx pkg`, `claude plugin install pkg@npm`, or `git clone` into a skills or plugins folder), the hook checks the target first. Clean installs go through untouched; ordinary commands cost about 30 ms. If you have seen the findings and still want a blocked install, ask the agent to re-run it prefixed with `DOCKFERRET_OK=1`.
 
-For Cursor and other MCP clients, add a server with command `npx` and args `["-y", "dockferret", "mcp"]`. It exposes two tools, `check` and `run`. Your own agent reads the report and judges fit against what you're working on, so there's no extra model bill.
+For any other MCP client, add a server with command `npx` and args `["-y", "dockferret", "mcp"]`. It exposes two tools, `check` and `run`, and your own agent judges fit against what you are working on, so there is no extra model bill.
 
 ## What the sandbox does
 

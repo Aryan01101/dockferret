@@ -12,25 +12,26 @@ const HELP = `dockferret ${version}: try it in a sandbox before it touches your 
   dockferret run <target> [--net] [--timeout s] -- <command>
                                              Run a command against a sandboxed copy
   dockferret mcp                               Start the MCP connector (stdio)
+  dockferret setup [--yes] [--uninstall]       Connect every agent on this machine
 
   <target> is a local folder, a GitHub URL, or an npm package name.
 
-  Add to your agent:
-    codex mcp add dockferret -- npx -y dockferret mcp
-    claude mcp add dockferret -- npx -y dockferret mcp`
+  Connect your agents (Claude Code, Codex, Cursor, Gemini CLI):
+    dockferret setup`
 
 const dash = process.argv.indexOf('--')
 const argv = process.argv.slice(2, dash === -1 ? undefined : dash)
 const command = dash === -1 ? '' : process.argv.slice(dash + 1).join(' ')
 const { values, positionals } = parseArgs({
   args: argv, allowPositionals: true,
-  options: { json: { type: 'boolean' }, net: { type: 'boolean' }, timeout: { type: 'string' }, help: { type: 'boolean', short: 'h' }, version: { type: 'boolean', short: 'v' } },
+  options: { yes: { type: 'boolean', short: 'y' }, uninstall: { type: 'boolean' }, json: { type: 'boolean' }, net: { type: 'boolean' }, timeout: { type: 'string' }, help: { type: 'boolean', short: 'h' }, version: { type: 'boolean', short: 'v' } },
 })
 const [cmd, target] = positionals
 
 try {
   if (values.version) console.log(version)
   else if (cmd === 'mcp') await (await import('./mcp.js')).serve(version)
+  else if (cmd === 'setup') await (await import('./setup.js')).setup({ version, yes: values.yes, uninstall: values.uninstall })
   else if (cmd === 'check' && target) {
     const { dir, source, cleanup } = resolveTarget(target)
     try {
